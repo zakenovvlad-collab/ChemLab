@@ -181,3 +181,8 @@ cython_debug/
 .cursorindexingignore
 ngrok.exe
 ngrok.exe
+.env
+venv/
+__pycache__/
+*.pyc
+*.pyo
