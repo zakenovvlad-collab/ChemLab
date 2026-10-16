@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>ChemLab</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div id="effects-layer"></div>
+
+    <header>
+        <div class="header-left">
+            <h1>🧪 ChemLab</h1>
+            <p id="user-info">Загрузка...</p>
+        </div>
+        <button id="profile-btn" class="profile-btn">
+            <span id="profile-avatar">👤</span>
+        </button>
+    </header>
+
+    <nav class="tabs">
+        <button class="tab active" data-tab="table">Таблица</button>
+        <button class="tab" data-tab="lab">Лаборатория</button>
+    </nav>
+
+    <main>
+        <section data-view="table">
+            <div id="periodic-table" class="periodic-table"></div>
+            <div id="details-panel" class="details-panel hidden">
+                <button id="close-details" class="close-btn">✕</button>
+                <div id="details-content"></div>
+            </div>
+        </section>
+
+        <section data-view="lab" class="hidden">
+            <div class="quick-add">
+                <input type="text" id="quick-input" placeholder="Номер, символ или формула" />
+                <button id="quick-btn">+</button>
+            </div>
+
+            <div class="reactor">
+                <div class="reactor-label">Реактор</div>
+                <div id="reactor-items" class="reactor-items">
+                    <div class="reactor-empty">Добавь реагенты из палитры ↓</div>
+                </div>
+                <div class="reactor-actions">
+                    <button id="clear-btn" class="btn-secondary">Очистить</button>
+                    <button id="mix-btn" class="btn-primary">⚡ Смешать!</button>
+                </div>
+            </div>
+
+            <div id="result-area" class="result-area"></div>
+
+            <div class="palette-label">Элементы</div>
+            <div id="palette" class="palette"></div>
+
+            <div class="palette-label" style="margin-top: 18px;">Соединения</div>
+            <div id="molecules-palette" class="palette molecules"></div>
+        </section>
+    </main>
+
+    <!-- Профиль -->
+    <div id="profile-modal" class="profile-modal hidden">
+        <div class="profile-content">
+            <button id="profile-close" class="close-btn">✕</button>
+
+            <div class="profile-header">
+                <div class="profile-avatar-big" id="profile-avatar-big">👤</div>
+                <div class="profile-name" id="profile-name">Пользователь</div>
+                <div class="profile-sub" id="profile-sub">@username</div>
+            </div>
+
+            <div class="profile-stats">
+                <div class="stat">
+                    <div class="stat-value" id="stat-total">0</div>
+                    <div class="stat-label">Реакций</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="stat-unique">0</div>
+                    <div class="stat-label">Уникальных</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-value" id="stat-progress">0%</div>
+                    <div class="stat-label">База</div>
+                </div>
+            </div>
+
+            <div class="profile-section-title">
+                <span>История</span>
+                <button id="clear-history" class="link-btn">Очистить</button>
+            </div>
+
+            <div id="history-list" class="history-list">
+                <div class="history-empty">Здесь появятся твои реакции</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
