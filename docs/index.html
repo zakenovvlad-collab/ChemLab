@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>ChemLab - Лаборатория</title>
+    <title>ChemLab - Таблица Менделеева</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -15,13 +15,13 @@
 
         <!-- НАВИГАЦИЯ (ВКЛАДКИ) -->
         <div class="tabs">
-            <button id="tab-lab" class="tab-btn active" onclick="switchTab('lab')">Лаборатория</button>
-            <button id="tab-guide" class="tab-btn" onclick="switchTab('guide')">Справочник 📖</button>
+            <button id="tab-lab" class="tab-btn active" onclick="switchTab('lab')">Колба</button>
+            <button id="tab-table" class="tab-btn" onclick="switchTab('table')">Таблица</button>
+            <button id="tab-guide" class="tab-btn" onclick="switchTab('guide')">Справочник</button>
         </div>
 
         <!-- ВКЛАДКА: ЛАБОРАТОРИЯ -->
         <div id="view-lab" class="view active-view">
-            <!-- Зона с колбой -->
             <div class="lab-area">
                 <div class="flask-wrapper">
                     <div class="flask">
@@ -35,24 +35,36 @@
                 <div id="reaction-text" class="reaction-text">Добавь реагенты...</div>
             </div>
 
-            <!-- Панель с реагентами -->
             <div class="controls">
                 <button class="chem-btn" data-chem="water" style="--color: #3498db">💧 Вода (H₂O)</button>
                 <button class="chem-btn" data-chem="acid" style="--color: #e74c3c">🧪 Кислота (H₂SO₄)</button>
                 <button class="chem-btn" data-chem="base" style="--color: #9b59b6">🧼 Щелочь (NaOH)</button>
-                <button class="chem-btn" data-chem="metal" style="--color: #bdc3c7">🔩 Натрий (Na)</button>
-                <button class="chem-btn" data-chem="peroxide" style="--color: #00d2d3">💨 Перекись (H₂O₂)</button>
-                <button class="chem-btn" data-chem="copper" style="--color: #b87333">🪙 Медь (Cu)</button>
-                <button class="chem-btn" data-chem="indicator" style="--color: #f368e0">🔮 Индикатор</button>
+                <button class="chem-btn" data-chem="Na" style="--color: #bdc3c7">🔩 Натрий (Na)</button>
+                <button class="chem-btn" data-chem="Cu" style="--color: #b87333">🪙 Медь (Cu)</button>
+                <button class="chem-btn" data-chem="Fe" style="--color: #7f8c8d">🔗 Железо (Fe)</button>
             </div>
 
             <button id="reset-btn" class="reset-btn">Очистить колбу 🗑️</button>
         </div>
 
+        <!-- ВКЛАДКА: ТАБЛИЦА МЕНДЕЛЕЕВА -->
+        <div id="view-table" class="view">
+            <div class="table-container">
+                <div id="periodic-table" class="periodic-table">
+                    <!-- Таблица сгенерируется через JS -->
+                </div>
+            </div>
+        </div>
+
         <!-- ВКЛАДКА: СПРАВОЧНИК -->
         <div id="view-guide" class="view">
+            <div id="guide-detail" class="guide-detail" style="display: none;">
+                <!-- Детальная карточка элемента -->
+                <button class="back-btn" onclick="closeGuideDetail()">← Назад к списку</button>
+                <div id="detail-content"></div>
+            </div>
             <div id="guide-list" class="guide-list">
-                <!-- Карточки справочника будут генерироваться через JS -->
+                <!-- Список карточек -->
             </div>
         </div>
     </div>

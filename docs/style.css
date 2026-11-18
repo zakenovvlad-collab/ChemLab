@@ -2,7 +2,6 @@
     --bg-color: var(--tg-theme-bg-color, #17212b);
     --text-color: var(--tg-theme-text-color, #ffffff);
     --secondary-bg: var(--tg-theme-secondary-bg-color, #232e3c);
-    --button-color: var(--tg-theme-button-color, #5288c1);
     --hint-color: var(--tg-theme-hint-color, #708499);
 }
 
@@ -16,54 +15,31 @@ body {
     display: flex;
     justify-content: center;
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
 .app-container {
     width: 100%;
-    max-width: 450px;
-    padding: 15px;
+    max-width: 500px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 header { margin-bottom: 10px; text-align: center; }
-h2 { margin: 0; font-size: 20px; }
+h2 { margin: 0; font-size: 18px; }
 
 /* --- Вкладки --- */
-.tabs {
-    display: flex;
-    background: var(--secondary-bg);
-    border-radius: 10px;
-    padding: 4px;
-    width: 100%;
-    margin-bottom: 20px;
-}
-
-.tab-btn {
-    flex: 1;
-    padding: 10px;
-    border: none;
-    background: transparent;
-    color: var(--hint-color);
-    font-size: 14px;
-    font-weight: 600;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.tab-btn.active {
-    background: var(--bg-color);
-    color: var(--text-color);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
+.tabs { display: flex; background: var(--secondary-bg); border-radius: 10px; padding: 4px; width: 100%; margin-bottom: 15px; }
+.tab-btn { flex: 1; padding: 8px; border: none; background: transparent; color: var(--hint-color); font-size: 13px; font-weight: 600; border-radius: 8px; cursor: pointer; transition: all 0.2s; }
+.tab-btn.active { background: var(--bg-color); color: var(--text-color); box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
 
 /* --- Управление вкладками --- */
 .view { display: none; width: 100%; flex-direction: column; align-items: center; }
 .view.active-view { display: flex; }
 
-/* --- Стили колбы (как были) --- */
+/* --- Лаборатория (Колба) --- */
 .lab-area { display: flex; flex-direction: column; align-items: center; width: 100%; }
 .flask-wrapper { position: relative; width: 120px; height: 170px; margin: 10px 0; }
 .flask-neck { width: 36px; height: 40px; background: rgba(255, 255, 255, 0.1); border: 3px solid rgba(255, 255, 255, 0.3); border-bottom: none; margin: 0 auto; border-radius: 5px 5px 0 0; }
@@ -72,18 +48,64 @@ h2 { margin: 0; font-size: 20px; }
 .bubbles { position: absolute; bottom: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
 .bubble { position: absolute; bottom: 0; background: rgba(255, 255, 255, 0.6); border-radius: 50%; animation: rise 1.5s infinite ease-in; }
 @keyframes rise { 0% { transform: translateY(0) scale(1); opacity: 1; } 100% { transform: translateY(-150px) scale(1.5); opacity: 0; } }
-
 .reaction-text { text-align: center; font-weight: bold; min-height: 40px; color: #f1c40f; font-size: 14px; margin-top: 10px; transition: color 0.3s; }
 
-/* --- Кнопки реагентов --- */
 .controls { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; width: 100%; margin-top: 15px; }
-.chem-btn { padding: 10px 8px; border: none; border-radius: 8px; background-color: var(--secondary-bg); color: var(--text-color); font-size: 13px; font-weight: 600; cursor: pointer; transition: transform 0.1s, background 0.2s; border-left: 4px solid var(--color); display: flex; align-items: center; justify-content: center; gap: 4px; }
+.chem-btn { padding: 8px; border: none; border-radius: 8px; background-color: var(--secondary-bg); color: var(--text-color); font-size: 12px; font-weight: 600; cursor: pointer; transition: transform 0.1s; border-left: 4px solid var(--color); display: flex; align-items: center; justify-content: center; gap: 4px; }
 .chem-btn:active { transform: scale(0.95); }
-.reset-btn { width: 100%; padding: 12px; border: none; border-radius: 10px; background-color: transparent; color: #e74c3c; font-size: 14px; cursor: pointer; margin-top: 15px; border: 1px solid #e74c3c; }
+.reset-btn { width: 100%; padding: 10px; border: none; border-radius: 10px; background-color: transparent; color: #e74c3c; font-size: 13px; cursor: pointer; margin-top: 15px; border: 1px solid #e74c3c; }
 
-/* --- Стили Справочника --- */
-.guide-list { display: flex; flex-direction: column; gap: 10px; width: 100%; padding-bottom: 20px; }
-.guide-card { background: var(--secondary-bg); padding: 15px; border-radius: 12px; border-left: 4px solid var(--card-color); }
-.guide-card h3 { margin: 0 0 5px 0; font-size: 16px; display: flex; justify-content: space-between; align-items: center; }
-.guide-card .formula { font-size: 14px; color: var(--hint-color); font-weight: normal; }
-.guide-card p { margin: 0; font-size: 13px; line-height: 1.4; color: var(--text-color); opacity: 0.9; }
+/* --- Таблица Менделеева --- */
+.table-container { width: 100%; overflow-x: auto; padding-bottom: 10px; }
+.periodic-table {
+    display: grid;
+    grid-template-columns: repeat(18, 30px);
+    grid-template-rows: repeat(7, 35px);
+    gap: 2px;
+    min-width: 600px; /* Чтобы на телефоне был скролл */
+}
+.element-cell {
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    cursor: pointer;
+    transition: transform 0.1s;
+    color: #000;
+    font-weight: bold;
+    user-select: none;
+}
+.element-cell:active { transform: scale(1.1); z-index: 10; }
+.element-cell .number { font-size: 7px; align-self: flex-start; padding-left: 2px; margin-top: -2px; }
+.element-cell .symbol { font-size: 12px; }
+.element-cell .name { font-size: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+
+/* Цвета категорий */
+.cat-nonmetal { background: #a0e6a0; }
+.cat-noble { background: #d7bde2; }
+.cat-alkali { background: #f5b041; }
+.cat-alkaline { background: #f9e79f; }
+.cat-metalloid { background: #85c1e9; }
+.cat-halogen { background: #f1948a; }
+.cat-transition { background: #d5d8dc; }
+.cat-post-transition { background: #aeb6bf; }
+
+/* --- Справочник --- */
+.guide-list { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+.guide-card { background: var(--secondary-bg); padding: 12px; border-radius: 10px; border-left: 4px solid var(--card-color); cursor: pointer; }
+.guide-card h3 { margin: 0 0 5px 0; font-size: 15px; display: flex; justify-content: space-between; }
+.guide-card .formula { font-size: 12px; color: var(--hint-color); }
+.guide-card p { margin: 0; font-size: 12px; opacity: 0.8; }
+
+.guide-detail { width: 100%; background: var(--secondary-bg); padding: 20px; border-radius: 12px; }
+.back-btn { background: transparent; border: none; color: var(--hint-color); font-size: 14px; cursor: pointer; margin-bottom: 15px; padding: 0; }
+.detail-header { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; }
+.detail-symbol { font-size: 40px; font-weight: bold; }
+.detail-title h2 { margin: 0; font-size: 20px; }
+.detail-title p { margin: 0; color: var(--hint-color); font-size: 14px; }
+.detail-section { margin-bottom: 15px; }
+.detail-section h4 { margin: 0 0 5px 0; font-size: 14px; color: var(--hint-color); }
+.detail-section p { margin: 0; font-size: 14px; line-height: 1.4; }
+.reaction-tag { display: inline-block; background: var(--bg-color); padding: 4px 8px; border-radius: 5px; font-size: 12px; margin: 2px 4px 2px 0; border: 1px solid var(--hint-color); }
