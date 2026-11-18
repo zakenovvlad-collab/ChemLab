@@ -57,18 +57,14 @@
             <!-- Поиск -->
             <input type="text" id="search-input" class="search-bar" placeholder="🔍 Поиск элемента или формулы...">
             
-            <!-- Категории -->
+                       <!-- Категории -->
             <div class="categories" id="categories-container">
-                <button class="cat-btn active" onclick="filterCategory('all')">Все</button>
-                <button class="cat-btn" onclick="filterCategory('metal')">Металлы</button>
-                <button class="cat-btn" onclick="filterCategory('nonmetal')">Неметаллы</button>
-                <button class="cat-btn" onclick="filterCategory('acid')">Кислоты</button>
-                <button class="cat-btn" onclick="filterCategory('base')">Щелочи</button>
-                <button class="cat-btn" onclick="filterCategory('salt')">Соли</button>
-            </div>
-
-            <div class="grid-container" id="elements-grid">
-                <!-- Карточки генерируются через JS -->
+                <button class="cat-btn active" onclick="filterCategory('all', this)">Все</button>
+                <button class="cat-btn" onclick="filterCategory('metal', this)">Металлы</button>
+                <button class="cat-btn" onclick="filterCategory('nonmetal', this)">Неметаллы</button>
+                <button class="cat-btn" onclick="filterCategory('acid', this)">Кислоты</button>
+                <button class="cat-btn" onclick="filterCategory('base', this)">Щелочи</button>
+                <button class="cat-btn" onclick="filterCategory('salt', this)">Соли</button>
             </div>
         </main>
 
