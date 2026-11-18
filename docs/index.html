@@ -10,36 +10,51 @@
 <body>
     <div class="app-container">
         <header>
-            <h2>🧪 Химическая лаборатория</h2>
+            <h2 id="header-title">🧪 Лаборатория</h2>
         </header>
 
-        <!-- Зона с колбой -->
-        <div class="lab-area">
-            <div class="flask-wrapper">
-                <div class="flask">
-                    <div class="flask-neck"></div>
-                    <div class="flask-body">
-                        <!-- Жидкость внутри колбы -->
-                        <div id="liquid" class="liquid"></div>
-                        <!-- Слой для пузырьков -->
-                        <div id="bubbles" class="bubbles"></div>
+        <!-- НАВИГАЦИЯ (ВКЛАДКИ) -->
+        <div class="tabs">
+            <button id="tab-lab" class="tab-btn active" onclick="switchTab('lab')">Лаборатория</button>
+            <button id="tab-guide" class="tab-btn" onclick="switchTab('guide')">Справочник 📖</button>
+        </div>
+
+        <!-- ВКЛАДКА: ЛАБОРАТОРИЯ -->
+        <div id="view-lab" class="view active-view">
+            <!-- Зона с колбой -->
+            <div class="lab-area">
+                <div class="flask-wrapper">
+                    <div class="flask">
+                        <div class="flask-neck"></div>
+                        <div class="flask-body">
+                            <div id="liquid" class="liquid"></div>
+                            <div id="bubbles" class="bubbles"></div>
+                        </div>
                     </div>
                 </div>
+                <div id="reaction-text" class="reaction-text">Добавь реагенты...</div>
             </div>
-            
-            <!-- Текстовое поле для результата реакции -->
-            <div id="reaction-text" class="reaction-text">Добавь реагенты...</div>
+
+            <!-- Панель с реагентами -->
+            <div class="controls">
+                <button class="chem-btn" data-chem="water" style="--color: #3498db">💧 Вода (H₂O)</button>
+                <button class="chem-btn" data-chem="acid" style="--color: #e74c3c">🧪 Кислота (H₂SO₄)</button>
+                <button class="chem-btn" data-chem="base" style="--color: #9b59b6">🧼 Щелочь (NaOH)</button>
+                <button class="chem-btn" data-chem="metal" style="--color: #bdc3c7">🔩 Натрий (Na)</button>
+                <button class="chem-btn" data-chem="peroxide" style="--color: #00d2d3">💨 Перекись (H₂O₂)</button>
+                <button class="chem-btn" data-chem="copper" style="--color: #b87333">🪙 Медь (Cu)</button>
+                <button class="chem-btn" data-chem="indicator" style="--color: #f368e0">🔮 Индикатор</button>
+            </div>
+
+            <button id="reset-btn" class="reset-btn">Очистить колбу 🗑️</button>
         </div>
 
-        <!-- Панель с реагентами -->
-        <div class="controls">
-            <button class="chem-btn" data-chem="water" style="--color: #3498db">💧 Вода (H₂O)</button>
-            <button class="chem-btn" data-chem="acid" style="--color: #e74c3c">🧪 Кислота (H₂SO₄)</button>
-            <button class="chem-btn" data-chem="base" style="--color: #9b59b6">🧼 Щелочь (NaOH)</button>
-            <button class="chem-btn" data-chem="metal" style="--color: #bdc3c7">🔩 Металл (Na)</button>
+        <!-- ВКЛАДКА: СПРАВОЧНИК -->
+        <div id="view-guide" class="view">
+            <div id="guide-list" class="guide-list">
+                <!-- Карточки справочника будут генерироваться через JS -->
+            </div>
         </div>
-
-        <button id="reset-btn" class="reset-btn">Очистить колбу 🗑️</button>
     </div>
     
     <script src="app.js"></script>
