@@ -114,11 +114,16 @@ function renderGrid() {
     }
 }
 
-function filterCategory(cat) {
+function filterCategory(cat, btn) {
     tg.HapticFeedback.impactOccurred('light');
     currentFilter = cat;
-    document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
+    
+    // Убираем класс active со всех кнопок
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    
+    // Добавляем класс active той кнопке, на которую нажали
+    btn.classList.add('active'); 
+    
     renderGrid();
 }
 
