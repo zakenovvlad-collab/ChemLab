@@ -3,70 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>ChemLab - Таблица Менделеева</title>
+    <title>ChemLab</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="app-container">
-        <header>
-            <h2 id="header-title">🧪 Лаборатория</h2>
+        
+        <!-- ШАПКА -->
+        <header class="header">
+            <h1>🧪 ChemLab</h1>
         </header>
 
-        <!-- НАВИГАЦИЯ (ВКЛАДКИ) -->
-        <div class="tabs">
-            <button id="tab-lab" class="tab-btn active" onclick="switchTab('lab')">Колба</button>
-            <button id="tab-table" class="tab-btn" onclick="switchTab('table')">Таблица</button>
-            <button id="tab-guide" class="tab-btn" onclick="switchTab('guide')">Справочник</button>
-        </div>
+        <!-- НАВИГАЦИЯ -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" onclick="switchView('lab')" id="nav-lab">
+                <span class="icon">⚗️</span>
+                <span>Колба</span>
+            </button>
+            <button class="nav-item" onclick="switchView('elements')" id="nav-elements">
+                <span class="icon">⚛️</span>
+                <span>Реагенты</span>
+            </button>
+            <button class="nav-item" onclick="switchView('info')" id="nav-info">
+                <span class="icon">📖</span>
+                <span>Инфо</span>
+            </button>
+        </nav>
 
-        <!-- ВКЛАДКА: ЛАБОРАТОРИЯ -->
-        <div id="view-lab" class="view active-view">
-            <div class="lab-area">
-                <div class="flask-wrapper">
-                    <div class="flask">
-                        <div class="flask-neck"></div>
-                        <div class="flask-body">
-                            <div id="liquid" class="liquid"></div>
-                            <div id="bubbles" class="bubbles"></div>
-                        </div>
+        <!-- ЭКРАН 1: ЛАБОРАТОРИЯ -->
+        <main id="view-lab" class="view active-view">
+            <div class="flask-area">
+                <div class="flask">
+                    <div class="flask-neck"></div>
+                    <div class="flask-body">
+                        <div id="liquid" class="liquid"></div>
+                        <div id="bubbles" class="bubbles"></div>
                     </div>
                 </div>
-                <div id="reaction-text" class="reaction-text">Добавь реагенты...</div>
             </div>
-
-            <div class="controls">
-                <button class="chem-btn" data-chem="water" style="--color: #3498db">💧 Вода (H₂O)</button>
-                <button class="chem-btn" data-chem="acid" style="--color: #e74c3c">🧪 Кислота (H₂SO₄)</button>
-                <button class="chem-btn" data-chem="base" style="--color: #9b59b6">🧼 Щелочь (NaOH)</button>
-                <button class="chem-btn" data-chem="Na" style="--color: #bdc3c7">🔩 Натрий (Na)</button>
-                <button class="chem-btn" data-chem="Cu" style="--color: #b87333">🪙 Медь (Cu)</button>
-                <button class="chem-btn" data-chem="Fe" style="--color: #7f8c8d">🔗 Железо (Fe)</button>
+            
+            <div class="status-panel">
+                <h3 id="reaction-title">Пустая колба</h3>
+                <p id="reaction-desc">Добавьте два компонента для реакции.</p>
+                <button id="reset-btn" class="action-btn clear">Очистить 🗑️</button>
             </div>
+        </main>
 
-            <button id="reset-btn" class="reset-btn">Очистить колбу 🗑️</button>
-        </div>
+        <!-- ЭКРАН 2: СЕТКА ЭЛЕМЕНТОВ (ВМЕСТО ТАБЛИЦЫ) -->
+        <main id="view-elements" class="view">
+            <div class="grid-container" id="elements-grid">
+                <!-- Карточки генерируются через JS -->
+            </div>
+        </main>
 
-        <!-- ВКЛАДКА: ТАБЛИЦА МЕНДЕЛЕЕВА -->
-        <div id="view-table" class="view">
-            <div class="table-container">
-                <div id="periodic-table" class="periodic-table">
-                    <!-- Таблица сгенерируется через JS -->
+        <!-- ЭКРАН 3: ИНФО О ВЕЩЕСТВЕ (ВЫЕЗЖАЕТ КАРТОЧКА) -->
+        <main id="view-info" class="view">
+            <button class="back-btn" onclick="switchView('elements')">← Назад к реагентам</button>
+            
+            <div id="info-card" class="info-card">
+                <div class="info-header">
+                    <div id="info-symbol" class="info-symbol">H</div>
+                    <div>
+                        <h2 id="info-name">Водород</h2>
+                        <p id="info-type">Неметалл</p>
+                    </div>
                 </div>
+                <div class="info-body">
+                    <p id="info-desc">Описание элемента...</p>
+                    
+                    <h4 style="margin-top: 15px; margin-bottom: 5px;">Взаимодействует с:</h4>
+                    <div id="info-reacts" class="tags-container"></div>
+                </div>
+                <button id="add-to-flask-btn" class="action-btn add">➕ В колбу</button>
             </div>
-        </div>
+        </main>
 
-        <!-- ВКЛАДКА: СПРАВОЧНИК -->
-        <div id="view-guide" class="view">
-            <div id="guide-detail" class="guide-detail" style="display: none;">
-                <!-- Детальная карточка элемента -->
-                <button class="back-btn" onclick="closeGuideDetail()">← Назад к списку</button>
-                <div id="detail-content"></div>
-            </div>
-            <div id="guide-list" class="guide-list">
-                <!-- Список карточек -->
-            </div>
-        </div>
     </div>
     
     <script src="app.js"></script>
