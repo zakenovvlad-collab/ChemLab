@@ -34,18 +34,18 @@
         <main id="view-elements" class="view">
             <input type="text" id="search-input" class="search-bar" placeholder="🔍 Поиск элемента...">
             <div class="categories" id="categories-container">
-                <button class="cat-btn active" onclick="filterCategory('all', this)">Все</button>
-                <button class="cat-btn" onclick="filterCategory('metal', this)">Металлы</button>
-                <button class="cat-btn" onclick="filterCategory('nonmetal', this)">Неметаллы</button>
-                <button class="cat-btn" onclick="filterCategory('acid', this)">Кислоты</button>
-                <button class="cat-btn" onclick="filterCategory('base', this)">Щелочи</button>
-                <button class="cat-btn" onclick="filterCategory('salt', this)">Соли</button>
+                <button class="cat-btn active" data-cat="all">Все</button>
+                <button class="cat-btn" data-cat="metal">Металлы</button>
+                <button class="cat-btn" data-cat="nonmetal">Неметаллы</button>
+                <button class="cat-btn" data-cat="acid">Кислоты</button>
+                <button class="cat-btn" data-cat="base">Щелочи</button>
+                <button class="cat-btn" data-cat="salt">Соли</button>
             </div>
             <div class="grid-container" id="elements-grid"></div>
         </main>
 
         <main id="view-info" class="view">
-            <button class="back-btn" onclick="switchView('elements')">← Назад к базе</button>
+            <button class="back-btn" id="back-btn">← Назад к базе</button>
             <div id="info-card" class="info-card">
                 <div class="info-header">
                     <div id="info-symbol" class="info-symbol">H</div>
@@ -63,15 +63,14 @@
             </div>
         </main>
 
-        <!-- Меню теперь физически в самом низу HTML -->
         <nav class="bottom-nav">
-            <button class="nav-item active" onclick="switchView('lab')" id="nav-lab">
+            <button class="nav-item active" id="nav-lab">
                 <span class="icon">⚗️</span><span>Колба</span>
             </button>
-            <button class="nav-item" onclick="switchView('elements')" id="nav-elements">
+            <button class="nav-item" id="nav-elements">
                 <span class="icon">⚛️</span><span>База</span>
             </button>
-            <button class="nav-item" onclick="switchView('info')" id="nav-info">
+            <button class="nav-item" id="nav-info">
                 <span class="icon">📖</span><span>Инфо</span>
             </button>
         </nav>
