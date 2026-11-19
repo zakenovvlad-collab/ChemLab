@@ -30,34 +30,23 @@ const database = {
     'NaCl': { sym: 'NaCl', name: 'Соль', color: '#ecf0f1', cat: 'salt', type: 'Соль', desc: 'Поваренная соль.', reacts: ['AgNO3'] }
 };
 
-// --- БАЗА РЕАКЦИЙ (ОБНОВЛЕНА) ---
+// --- БАЗА РЕАКЦИЙ ---
 const reactions = {
-    // Реакции с водой
     'H2O+Na': { title: 'Взрыв!', desc: 'Натрий сгорает в воде.', color: '#f1c40f', bubbles: true, precip: false },
     'H2O+K': { title: 'Взрыв!', desc: 'Калий вспыхивает.', color: '#9b59b6', bubbles: true, precip: false },
-    
-    // Металлы + Кислоты
     'H2SO4+Zn': { title: 'Выделение газа', desc: 'Цинк растворяется.', color: '#bdc3c7', bubbles: true, precip: false },
     'HCl+Zn': { title: 'Выделение газа', desc: 'Цинк растворяется.', color: '#bdc3c7', bubbles: true, precip: false },
     'HCl+Fe': { title: 'Растворение', desc: 'Железо растворяется.', color: '#2ecc71', bubbles: true, precip: false },
     'H2SO4+Cu': { title: 'Окисление', desc: 'Раствор синеет.', color: '#1e90ff', bubbles: true, precip: false },
-    
-    // Нейтрализация
     'H2SO4+NaOH': { title: 'Нейтрализация', desc: 'Соль и вода.', color: '#2ecc71', bubbles: false, precip: false },
     'HCl+NaOH': { title: 'Нейтрализация', desc: 'Соль и вода.', color: '#ecf0f1', bubbles: false, precip: false },
-    
-    // Осадки
     'AgNO3+NaCl': { title: 'Белый осадок!', desc: 'Выпал хлорид серебра.', color: '#ecf0f1', bubbles: false, precip: true, precipColor: '#ffffff' },
     'AgNO3+HCl': { title: 'Белый осадок!', desc: 'Выпал хлорид серебра.', color: '#ecf0f1', bubbles: false, precip: true, precipColor: '#ffffff' },
     'CuSO4+NaOH': { title: 'Голубой осадок!', desc: 'Выпал гидроксид меди.', color: '#1e90ff', bubbles: false, precip: true, precipColor: '#3498db' },
     'CuSO4+Fe': { title: 'Замещение', desc: 'Осадок меди.', color: '#b87333', bubbles: false, precip: true, precipColor: '#b87333' },
-    
-    // Окисление и горение
     'H2+O2': { title: 'Гремучий газ', desc: 'Взрыв! Вода.', color: '#3498db', bubbles: true, precip: false },
     'Fe+O2': { title: 'Ржавчина', desc: 'Железо окислилось.', color: '#d35400', bubbles: false, precip: true, precipColor: '#d35400' },
     'Cu+O2': { title: 'Окисление', desc: 'Медь почернела.', color: '#2c3e50', bubbles: false, precip: true, precipColor: '#2c3e50' },
-    
-    // --- НОВЫЕ РЕАКЦИИ ---
     'Fe+S': { title: 'Сульфид железа!', desc: 'Железо и сера соединились. Образовался черный осадок FeS.', color: '#2c3e50', bubbles: false, precip: true, precipColor: '#2c3e50' },
     'Cl2+Na': { title: 'Поваренная соль!', desc: 'Натрий сгорает в хлоре, образуя белый хлорид натрия (NaCl).', color: '#ecf0f1', bubbles: false, precip: true, precipColor: '#ffffff' },
     'O2+S': { title: 'Сернистый газ!', desc: 'Сера горит синим пламенем, образуя газ SO₂.', color: '#f1c40f', bubbles: true, precip: false },
@@ -79,9 +68,9 @@ const titleEl = document.getElementById('reaction-title');
 const descEl = document.getElementById('reaction-desc');
 const gridEl = document.getElementById('elements-grid');
 
-// --- НАВИГАЦИЯ ---
+// --- ФУНКЦИИ ---
 function switchView(viewId) {
-    tg.HapticFeedback.impactOccurred('light');
+    if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active-view'));
     document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
     
@@ -94,7 +83,6 @@ function switchView(viewId) {
     }
 }
 
-// --- СЕТКА ---
 function renderGrid() {
     if (!gridEl) return;
     gridEl.innerHTML = '';
@@ -117,7 +105,6 @@ function renderGrid() {
     }
 }
 
-// --- ИНФО ---
 function openInfo(key) {
     currentElementKey = key;
     const data = database[key];
@@ -144,9 +131,8 @@ function openInfo(key) {
     switchView('info');
 }
 
-// --- ЛАБОРАТОРИЯ ---
 function addToFlask(key) {
-    tg.HapticFeedback.impactOccurred('medium');
+    if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
     if (flask.length >= 2) resetLab();
 
     flask.push(key);
@@ -175,7 +161,7 @@ function addToFlask(key) {
                     precipEl.style.height = '30%';
                     precipEl.style.backgroundColor = reaction.precipColor || '#95a5a6';
                 }
-                tg.HapticFeedback.notificationOccurred('success');
+                if (tg.HapticFeedback) tg.HapticFeedback.notificationOccurred('success');
             } else {
                 titleEl.innerText = "Инертная смесь";
                 titleEl.style.color = "#7f8c8d";
@@ -194,7 +180,7 @@ function resetLab() {
     titleEl.innerText = "Пустая колба";
     titleEl.style.color = "var(--accent)";
     descEl.innerText = "Добавьте два компонента для реакции.";
-    tg.HapticFeedback.impactOccurred('heavy');
+    if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('heavy');
 }
 
 function spawnBubbles() {
@@ -211,41 +197,40 @@ function spawnBubbles() {
     }
 }
 
-// --- ПРИВЯЗКА СОБЫТИЙ ---
-document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('nav-lab').addEventListener('click', () => switchView('lab'));
-    document.getElementById('nav-elements').addEventListener('click', () => switchView('elements'));
-    document.getElementById('nav-info').addEventListener('click', () => {
-        if (currentElementKey) openInfo(currentElementKey);
-        else switchView('elements');
-    });
+// --- ПРИВЯЗКА СОБЫТИЙ (ЗАПУСКАЕТСЯ СРАЗУ) ---
+document.getElementById('nav-lab').addEventListener('click', () => switchView('lab'));
+document.getElementById('nav-elements').addEventListener('click', () => switchView('elements'));
+document.getElementById('nav-info').addEventListener('click', () => {
+    if (currentElementKey) openInfo(currentElementKey);
+    else switchView('elements');
+});
 
-    document.getElementById('back-btn').addEventListener('click', () => switchView('elements'));
+document.getElementById('back-btn').addEventListener('click', () => switchView('elements'));
 
-    document.querySelectorAll('.cat-btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const cat = e.target.getAttribute('data-cat');
-            tg.HapticFeedback.impactOccurred('light');
-            currentFilter = cat;
-            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-            e.target.classList.add('active');
-            renderGrid();
-        });
-    });
-
-    document.getElementById('search-input').addEventListener('input', (e) => {
-        currentSearch = e.target.value.toLowerCase();
+document.querySelectorAll('.cat-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        const cat = e.target.getAttribute('data-cat');
+        if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
+        currentFilter = cat;
+        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
         renderGrid();
     });
+});
 
-    document.getElementById('reset-btn').addEventListener('click', resetLab);
-    
-    document.getElementById('add-to-flask-btn').addEventListener('click', () => {
-        if (currentElementKey) {
-            addToFlask(currentElementKey);
-            switchView('lab');
-        }
-    });
-
+document.getElementById('search-input').addEventListener('input', (e) => {
+    currentSearch = e.target.value.toLowerCase();
     renderGrid();
 });
+
+document.getElementById('reset-btn').addEventListener('click', resetLab);
+
+document.getElementById('add-to-flask-btn').addEventListener('click', () => {
+    if (currentElementKey) {
+        addToFlask(currentElementKey);
+        switchView('lab');
+    }
+});
+
+// --- СТАРТ ---
+renderGrid();
