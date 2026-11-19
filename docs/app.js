@@ -46,7 +46,6 @@ const reactions = {
     'Cl2+H2': { title: 'Хлороводород', desc: 'Взрыв! Образовался газ HCl.', color: '#f1c40f', bubbles: true, precip: false }
 };
 
-// Сортируем ключи базы данных по алфавиту для книги
 const sortedKeys = Object.keys(database).sort();
 
 let flask = [];
@@ -54,6 +53,7 @@ let currentSearch = '';
 let currentElementKey = null;
 let currentPageIndex = 0;
 
+// DOM
 const liquidEl = document.getElementById('liquid');
 const precipEl = document.getElementById('precipitate');
 const bubblesEl = document.getElementById('bubbles');
@@ -67,13 +67,14 @@ function switchView(viewId) {
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active-view'));
     document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
     
-    document.getElementById(`view-${viewId}`).classList.add('active-view');
+    const targetView = document.getElementById(`view-${viewId}`);
+    if(targetView) targetView.classList.add('active-view');
     
     if (viewId === 'elements' || viewId === 'lab' || viewId === 'info') {
-        document.getElementById(`nav-${viewId}`).classList.add('active');
+        const targetNav = document.getElementById(`nav-${viewId}`);
+        if(targetNav) targetNav.classList.add('active');
     }
 
-    // Если открыли "Книгу" и ничего не выбрано - показываем оглавление
     if (viewId === 'info' && !currentElementKey) {
         showTOC();
     }
@@ -95,12 +96,15 @@ function renderGrid() {
         card.addEventListener('click', () => openInfo(key));
         gridEl.appendChild(card);
     }
-    if (gridEl.innerHTML === '') gridEl.innerHTML = '<div style="text-align:center; color:var(--hint); grid-column: 1/-1;">Ничего не найдено</div>';
+    if (gridEl.innerHTML === '') {
+        gridEl.innerHTML = '<div style="text-align:center; color:var(--hint); grid-column: 1/-1; padding: 20px;">Ничего не найдено</div>';
+    }
 }
 
 // --- КНИГА (ОГЛАВЛЕНИЕ) ---
 function renderTOC() {
     const tocList = document.getElementById('toc-list');
+    if(!tocList) return;
     tocList.innerHTML = '';
     
     sortedKeys.forEach((key, index) => {
@@ -119,8 +123,10 @@ function renderTOC() {
 }
 
 function showTOC() {
-    document.getElementById('book-toc').style.display = 'block';
-    document.getElementById('info-card').style.display = 'none';
+    const toc = document.getElementById('book-toc');
+    const card = document.getElementById('info-card');
+    if(toc) toc.style.display = 'block';
+    if(card) card.style.display = 'none';
 }
 
 // --- КНИГА (СТРАНИЦА) ---
@@ -129,19 +135,20 @@ function openInfo(key) {
     currentPageIndex = sortedKeys.indexOf(key);
     const data = database[key];
 
-    // Прячем оглавление, показываем страницу
-    document.getElementById('book-toc').style.display = 'none';
-    document.getElementById('info-card').style.display = 'block';
+    const toc = document.getElementById('book-toc');
+    const card = document.getElementById('info-card');
+    if(toc) toc.style.display = 'none';
+    if(card) card.style.display = 'block';
 
-    // Заполняем данными
     document.getElementById('info-symbol').innerText = data.sym;
     document.getElementById('info-symbol').style.color = data.color;
     document.getElementById('info-name').innerText = data.name;
     document.getElementById('info-type').innerText = data.type;
     document.getElementById('info-desc').innerText = data.desc;
-    document.getElementById('page-num').innerText = `Стр. ${currentPageIndex + 1} из ${sortedKeys.length}`;
+    
+    const pageNumEl = document.getElementById('page-num');
+    if(pageNumEl) pageNumEl.innerText = `Стр. ${currentPageIndex + 1} из ${sortedKeys.length}`;
 
-    // Теги реакций
     const reactsContainer = document.getElementById('info-reacts');
     reactsContainer.innerHTML = '';
     if (data.reacts && data.reacts.length > 0) {
@@ -155,9 +162,10 @@ function openInfo(key) {
         reactsContainer.innerHTML = '<span class="tag">Нет данных</span>';
     }
 
-    // Проверяем кнопки "Вперед/Назад"
-    document.getElementById('prev-page').disabled = (currentPageIndex === 0);
-    document.getElementById('next-page').disabled = (currentPageIndex === sortedKeys.length - 1);
+    const prevBtn = document.getElementById('prev-page');
+    const nextBtn = document.getElementById('next-page');
+    if(prevBtn) prevBtn.disabled = (currentPageIndex === 0);
+    if(nextBtn) nextBtn.disabled = (currentPageIndex === sortedKeys.length - 1);
 
     switchView('info');
 }
@@ -229,7 +237,7 @@ function spawnBubbles() {
     }
 }
 
-// --- СОБЫТИЯ ---
+// --- СОБЫТИЯ (Запуск) ---
 document.getElementById('nav-lab').addEventListener('click', () => switchView('lab'));
 document.getElementById('nav-elements').addEventListener('click', () => switchView('elements'));
 document.getElementById('nav-info').addEventListener('click', () => switchView('info'));
@@ -261,6 +269,6 @@ document.getElementById('add-to-flask-btn').addEventListener('click', () => {
     }
 });
 
-// СТАРТ
+// --- ИНИЦИАЛИЗАЦИЯ ---
 renderGrid();
 renderTOC();
