@@ -1,4 +1,3 @@
-// Безопасная инициализация
 let tg = window.Telegram?.WebApp;
 if (tg) {
     tg.ready();
@@ -7,7 +6,6 @@ if (tg) {
     tg = { HapticFeedback: { impactOccurred: () => {}, notificationOccurred: () => {} } };
 }
 
-// --- БАЗА ЭЛЕМЕНТОВ ---
 const database = {
     'H2': { sym: 'H₂', name: 'Водород', color: '#a0e6a0', cat: 'gas', type: 'Газ', desc: 'Самый легкий газ.', reacts: ['O2', 'Cl2'] },
     'O2': { sym: 'O₂', name: 'Кислород', color: '#e67e22', cat: 'gas', type: 'Газ', desc: 'Поддерживает горение.', reacts: ['H2', 'Fe', 'Cu'] },
@@ -30,7 +28,6 @@ const database = {
     'NaCl': { sym: 'NaCl', name: 'Соль', color: '#ecf0f1', cat: 'salt', type: 'Соль', desc: 'Поваренная соль.', reacts: ['AgNO3'] }
 };
 
-// --- БАЗА РЕАКЦИЙ ---
 const reactions = {
     'H2O+Na': { title: 'Взрыв!', desc: 'Натрий сгорает в воде.', color: '#f1c40f', bubbles: true, precip: false },
     'H2O+K': { title: 'Взрыв!', desc: 'Калий вспыхивает.', color: '#9b59b6', bubbles: true, precip: false },
@@ -54,13 +51,10 @@ const reactions = {
     'Cl2+H2': { title: 'Хлороводород', desc: 'Взрыв! Образовался газ HCl.', color: '#f1c40f', bubbles: true, precip: false }
 };
 
-// --- СОСТОЯНИЕ ---
 let flask = [];
-let currentFilter = 'all';
 let currentSearch = '';
 let currentElementKey = null;
 
-// --- DOM ЭЛЕМЕНТЫ ---
 const liquidEl = document.getElementById('liquid');
 const precipEl = document.getElementById('precipitate');
 const bubblesEl = document.getElementById('bubbles');
@@ -68,7 +62,6 @@ const titleEl = document.getElementById('reaction-title');
 const descEl = document.getElementById('reaction-desc');
 const gridEl = document.getElementById('elements-grid');
 
-// --- ФУНКЦИИ ---
 function switchView(viewId) {
     if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
     document.querySelectorAll('.view').forEach(v => v.classList.remove('active-view'));
@@ -88,7 +81,7 @@ function renderGrid() {
     gridEl.innerHTML = '';
     
     for (const [key, data] of Object.entries(database)) {
-        if (currentFilter !== 'all' && data.cat !== currentFilter) continue;
+        // Оставили только поиск
         if (currentSearch && !data.name.toLowerCase().includes(currentSearch) && !data.sym.toLowerCase().includes(currentSearch)) continue;
 
         const card = document.createElement('div');
@@ -197,7 +190,7 @@ function spawnBubbles() {
     }
 }
 
-// --- ПРИВЯЗКА СОБЫТИЙ (ЗАПУСКАЕТСЯ СРАЗУ) ---
+// --- СОБЫТИЯ ---
 document.getElementById('nav-lab').addEventListener('click', () => switchView('lab'));
 document.getElementById('nav-elements').addEventListener('click', () => switchView('elements'));
 document.getElementById('nav-info').addEventListener('click', () => {
@@ -206,17 +199,6 @@ document.getElementById('nav-info').addEventListener('click', () => {
 });
 
 document.getElementById('back-btn').addEventListener('click', () => switchView('elements'));
-
-document.querySelectorAll('.cat-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        const cat = e.target.getAttribute('data-cat');
-        if (tg.HapticFeedback) tg.HapticFeedback.impactOccurred('light');
-        currentFilter = cat;
-        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-        e.target.classList.add('active');
-        renderGrid();
-    });
-});
 
 document.getElementById('search-input').addEventListener('input', (e) => {
     currentSearch = e.target.value.toLowerCase();
@@ -232,5 +214,4 @@ document.getElementById('add-to-flask-btn').addEventListener('click', () => {
     }
 });
 
-// --- СТАРТ ---
 renderGrid();
