@@ -1,4 +1,11 @@
-const tg = window.Telegram.WebApp;
+const tg = window.Telegram?.WebApp || {
+    ready: () => {},
+    expand: () => {},
+    HapticFeedback: {
+        impactOccurred: () => {},
+        notificationOccurred: () => {}
+    }
+};
 tg.ready();
 tg.expand();
 
