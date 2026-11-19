@@ -9,60 +9,8 @@
 </head>
 <body>
     <div class="app-container">
-        <header class="header">
-            <h1>🧪 ChemLab <span style="font-size: 10px; color: #3498db; vertical-align: super;">PRO</span></h1>
-        </header>
-
-        <main id="view-lab" class="view active-view">
-            <div class="flask-area">
-                <div class="flask">
-                    <div class="flask-neck"></div>
-                    <div class="flask-body">
-                        <div id="precipitate" class="precipitate"></div>
-                        <div id="liquid" class="liquid"></div>
-                        <div id="bubbles" class="bubbles"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="status-panel">
-                <h3 id="reaction-title">Пустая колба</h3>
-                <p id="reaction-desc">Добавьте два компонента для реакции.</p>
-                <button id="reset-btn" class="action-btn clear">Очистить 🗑️</button>
-            </div>
-        </main>
-
-        <main id="view-elements" class="view">
-            <input type="text" id="search-input" class="search-bar" placeholder="🔍 Поиск элемента...">
-            <div class="categories" id="categories-container">
-                <button class="cat-btn active" data-cat="all">Все</button>
-                <button class="cat-btn" data-cat="metal">Металлы</button>
-                <button class="cat-btn" data-cat="nonmetal">Неметаллы</button>
-                <button class="cat-btn" data-cat="acid">Кислоты</button>
-                <button class="cat-btn" data-cat="base">Щелочи</button>
-                <button class="cat-btn" data-cat="salt">Соли</button>
-            </div>
-            <div class="grid-container" id="elements-grid"></div>
-        </main>
-
-        <main id="view-info" class="view">
-            <button class="back-btn" id="back-btn">← Назад к базе</button>
-            <div id="info-card" class="info-card">
-                <div class="info-header">
-                    <div id="info-symbol" class="info-symbol">H</div>
-                    <div>
-                        <h2 id="info-name">Водород</h2>
-                        <p id="info-type">Неметалл</p>
-                    </div>
-                </div>
-                <div class="info-body">
-                    <p id="info-desc">Описание...</p>
-                    <h4 style="margin-top: 15px; margin-bottom: 5px;">Реагирует с:</h4>
-                    <div id="info-reacts" class="tags-container"></div>
-                </div>
-                <button id="add-to-flask-btn" class="action-btn add">➕ Залить в колбу</button>
-            </div>
-        </main>
-
+        
+        <!-- Навигация (на ПК будет слева, на телефоне внизу) -->
         <nav class="bottom-nav">
             <button class="nav-item active" id="nav-lab">
                 <span class="icon">⚗️</span><span>Колба</span>
@@ -74,6 +22,58 @@
                 <span class="icon">📖</span><span>Инфо</span>
             </button>
         </nav>
+
+        <div class="main-content">
+            <header class="header">
+                <h1>🧪 ChemLab <span style="font-size: 10px; color: #3498db; vertical-align: super;">PRO</span></h1>
+            </header>
+
+            <!-- Экран 1: Лаборатория -->
+            <main id="view-lab" class="view active-view">
+                <div class="flask-area">
+                    <div class="flask">
+                        <div class="flask-neck"></div>
+                        <div class="flask-body">
+                            <div id="precipitate" class="precipitate"></div>
+                            <div id="liquid" class="liquid"></div>
+                            <div id="bubbles" class="bubbles"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="status-panel">
+                    <h3 id="reaction-title">Пустая колба</h3>
+                    <p id="reaction-desc">Добавьте два компонента для реакции.</p>
+                    <button id="reset-btn" class="action-btn clear">Очистить 🗑️</button>
+                </div>
+            </main>
+
+            <!-- Экран 2: База элементов -->
+            <main id="view-elements" class="view">
+                <input type="text" id="search-input" class="search-bar" placeholder="🔍 Поиск элемента...">
+                <div class="grid-container" id="elements-grid"></div>
+            </main>
+
+            <!-- Экран 3: Инфо -->
+            <main id="view-info" class="view">
+                <button class="back-btn" id="back-btn">← Назад к базе</button>
+                <div id="info-card" class="info-card">
+                    <div class="info-header">
+                        <div id="info-symbol" class="info-symbol">H</div>
+                        <div>
+                            <h2 id="info-name">Водород</h2>
+                            <p id="info-type">Неметалл</p>
+                        </div>
+                    </div>
+                    <div class="info-body">
+                        <p id="info-desc">Описание...</p>
+                        <h4 style="margin-top: 15px; margin-bottom: 5px;">Реагирует с:</h4>
+                        <div id="info-reacts" class="tags-container"></div>
+                    </div>
+                    <button id="add-to-flask-btn" class="action-btn add">➕ Залить в колбу</button>
+                </div>
+            </main>
+        </div>
+
     </div>
     <script src="app.js"></script>
 </body>
