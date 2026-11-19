@@ -10,7 +10,6 @@
 <body>
     <div class="app-container">
         
-        <!-- Навигация (на ПК будет слева, на телефоне внизу) -->
         <nav class="bottom-nav">
             <button class="nav-item active" id="nav-lab">
                 <span class="icon">⚗️</span><span>Колба</span>
@@ -19,7 +18,7 @@
                 <span class="icon">⚛️</span><span>База</span>
             </button>
             <button class="nav-item" id="nav-info">
-                <span class="icon">📖</span><span>Инфо</span>
+                <span class="icon">📖</span><span>Книга</span>
             </button>
         </nav>
 
@@ -53,24 +52,43 @@
                 <div class="grid-container" id="elements-grid"></div>
             </main>
 
-            <!-- Экран 3: Инфо -->
+            <!-- Экран 3: КНИГА (Инфо) -->
             <main id="view-info" class="view">
-                <button class="back-btn" id="back-btn">← Назад к базе</button>
-                <div id="info-card" class="info-card">
-                    <div class="info-header">
+                
+                <!-- Оглавление -->
+                <div id="book-toc" class="book-toc">
+                    <h2>📖 Химическая энциклопедия</h2>
+                    <p style="color: var(--hint); font-size: 13px; margin-bottom: 15px;">Выберите вещество для чтения</p>
+                    <div id="toc-list" class="toc-list"></div>
+                </div>
+
+                <!-- Страница книги -->
+                <div id="info-card" class="book-page" style="display: none;">
+                    <button class="back-btn" id="back-to-toc">← К оглавлению</button>
+                    
+                    <div class="book-header">
                         <div id="info-symbol" class="info-symbol">H</div>
                         <div>
                             <h2 id="info-name">Водород</h2>
-                            <p id="info-type">Неметалл</p>
+                            <p id="info-type" class="book-type">Неметалл</p>
                         </div>
                     </div>
-                    <div class="info-body">
-                        <p id="info-desc">Описание...</p>
-                        <h4 style="margin-top: 15px; margin-bottom: 5px;">Реагирует с:</h4>
+                    
+                    <div class="book-content">
+                        <p id="info-desc" class="book-desc">Описание...</p>
+                        <h4 style="margin-top: 15px; margin-bottom: 5px; border-bottom: 1px solid #ccc; padding-bottom: 5px;">Взаимодействует с:</h4>
                         <div id="info-reacts" class="tags-container"></div>
                     </div>
-                    <button id="add-to-flask-btn" class="action-btn add">➕ Залить в колбу</button>
+
+                    <div class="book-footer">
+                        <button id="prev-page" class="page-btn">← Пред.</button>
+                        <span id="page-num" class="page-num">1</span>
+                        <button id="next-page" class="page-btn">След. →</button>
+                    </div>
+
+                    <button id="add-to-flask-btn" class="action-btn add" style="margin-top: 10px;">➕ Залить в колбу</button>
                 </div>
+
             </main>
         </div>
 
