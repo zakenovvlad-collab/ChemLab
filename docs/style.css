@@ -5,7 +5,6 @@
     --btn-bg: var(--tg-theme-secondary-bg-color, #232e3c);
     --accent: #3498db;
     
-    /* Цвета для книги */
     --paper-bg: #fdf6e3;
     --paper-text: #333333;
     --paper-hint: #666666;
@@ -86,12 +85,12 @@ body {
 .book-page { 
     background: var(--paper-bg); 
     color: var(--paper-text); 
-    border-radius: 5px 15px 15px 5px; /* Имитация переплета слева */
+    border-radius: 5px 15px 15px 5px;
     padding: 25px 20px; 
     box-shadow: -5px 5px 15px rgba(0,0,0,0.3), inset 5px 0 10px rgba(0,0,0,0.05); 
     position: relative;
-    font-family: 'Georgia', serif; /* Шрифт с засечками для книги */
-    border-left: 5px solid #d4c5a9; /* Корешок */
+    font-family: 'Georgia', serif;
+    border-left: 5px solid #d4c5a9;
 }
 
 .back-btn { background: transparent; border: none; color: var(--paper-hint); font-size: 14px; text-align: left; padding: 0 0 15px 0; cursor: pointer; font-family: sans-serif;}
@@ -101,7 +100,7 @@ body {
 .book-type { margin: 0; color: var(--paper-hint); font-size: 14px; font-style: italic; }
 
 .book-content { min-height: 150px; font-size: 15px; line-height: 1.6; }
-.book-desc { margin-bottom: 15px; text-indent: 20px; /* Красная строка */ }
+.book-desc { margin-bottom: 15px; text-indent: 20px; }
 .tags-container { display: flex; flex-wrap: wrap; gap: 5px; }
 .tag { background: #e8dfc8; padding: 4px 8px; border-radius: 5px; font-size: 12px; color: #555; border: 1px solid #d4c5a9; font-family: sans-serif;}
 
@@ -121,8 +120,27 @@ body {
 @media (min-width: 768px) {
     body { background: #0f151c; align-items: center; }
     .app-container { flex-direction: row; max-width: 1000px; height: 85vh; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); overflow: hidden; border: 1px solid rgba(255,255,255,0.1); }
-    .bottom-nav { flex-direction: column; width: 220px; border-top: none; border-right: 1px solid rgba(255,255,255,0.05); padding: 20px 10px; order: -1; justify-content: flex-start; gap: 10px; }
-    .nav-item { flex-direction: row; justify-content: flex-start; padding: 15px 20px; font-size: 14px; gap: 15px; }
+    
+    .bottom-nav { 
+        flex-direction: column; 
+        width: 220px; 
+        border-top: none; 
+        border-right: 1px solid rgba(255,255,255,0.05); 
+        padding: 20px 10px; 
+        order: -1; 
+        justify-content: flex-start; 
+        gap: 10px; 
+    }
+    
+    .nav-item { 
+        flex: 0 0 auto; /* ИСПРАВЛЕНИЕ: убрали растягивание по вертикали */
+        flex-direction: row; 
+        justify-content: flex-start; 
+        padding: 15px 20px; 
+        font-size: 14px; 
+        gap: 15px; 
+    }
+    
     .nav-item .icon { margin-bottom: 0; font-size: 24px; }
     .header { padding: 20px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.05); }
     .header h1 { margin: 0; }
